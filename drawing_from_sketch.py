@@ -1,26 +1,49 @@
 import arcade
 
-#Function for dynamic tree creation, off seting points based on the bottom-left point of rectangle
-def draw_tree(x,y):
-    arcade.draw_xywh_rectangle_filled(x,y,20,95, arcade.color.BROWN)
-    arcade.draw_triangle_filled(x-30, y+75, x+50, y+75, x+10, y+150,arcade.color.GREEN)
 
 WIDTH = 640
 HEIGHT = 480
 
-arcade.open_window(WIDTH, HEIGHT, "My Drawing")
-arcade.set_background_color(arcade.color.SKY_BLUE)
-arcade.start_render()
-# Begin drawing
 
-arcade.draw_xywh_rectangle_filled(0, 0,640, 100,  arcade.color.APPLE_GREEN)
+def update(delta_time):
+    pass
 
-#Drawing 3 trees and a sun
-arcade.draw_circle_filled(WIDTH-100, HEIGHT-100, 50, arcade.color.YELLOW)
-draw_tree(200,50)
-draw_tree(WIDTH-200,50)
-draw_tree(WIDTH-125,50)
+def draw_tree(x,y,w,h,factor):
+	arcade.xywhrectangle(x,y,w,h,(0,0,0))
+	arcade.triangle(x-factor,y+h,x+w+factor,x+w/2,y+h+factor)
 
-# End drawing
-arcade.finish_render()
-arcade.run()
+def on_draw():
+    arcade.start_render()
+    # Draw in here...
+    for numb in range(0,5):
+	draw_trees(numb**2,20,30,50,25)
+
+
+def on_key_press(key, modifiers):
+    pass
+
+
+def on_key_release(key, modifiers):
+    pass
+
+
+def on_mouse_press(x, y, button, modifiers):
+    pass
+
+
+def setup():
+    arcade.open_window(WIDTH, HEIGHT, "My Arcade Game")
+    arcade.set_background_color(arcade.color.WHITE)
+    arcade.schedule(update, 1/60)
+
+    # Override arcade window methods
+    window = arcade.get_window()
+    window.on_draw = on_draw
+    window.on_key_press = on_key_press
+    window.on_key_release = on_key_release
+
+    arcade.run()
+
+
+if __name__ == '__main__':
+    setup()
